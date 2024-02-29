@@ -89,4 +89,4 @@ def preprocess(dataframe):
     # stemming
     dataframe['content'] = dataframe['content'].apply(remove_word_variations)
 
-    return dataframe
+    return None
