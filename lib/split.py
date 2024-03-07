@@ -13,13 +13,17 @@ def eighty_ten_ten(df: pd.DataFrame) -> None:
     test_data = pd.DataFrame()
 
     # training data split into 80/20
+    # random_state saves the state of the random selection. This means it can be reproduced.
     training_data = df.sample(frac=0.8, random_state=0)
+    # training_data = df.sample(frac=0.8)
 
     # remaining data
     remaining_data = df.drop(training_data.index)
 
     # validation data
     validation_data = remaining_data.sample(frac=0.5, random_state=1)
+    # validation_data = remaining_data.sample(frac=0.5)
+
 
     # test data
     test_data = remaining_data.drop(validation_data.index)
