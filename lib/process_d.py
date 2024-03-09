@@ -26,23 +26,7 @@ def preprocess(dataframe: pd.DataFrame) -> pd.DataFrame:
                     'source'
                     ], axis=1, inplace=True)
 
-
-    # remove rows with omitted types
-    omitted_types = {'political',
-                 'bias',
-                 'rumor',
-                 'unknown',
-                 'unreliable',
-                 'clickbait',
-                 'junksci',
-                 'hate',
-                 '2018-02-10 13:43:39.521661'
-    }
-
-    drop_indexes = clean_data[ (clean_data['type'].isin(omitted_types))].index
-    clean_data.drop(drop_indexes, inplace=True)
-
-    # remove rows with NaN types
+    # remove rows without type labels
     drop_null_types = clean_data[ (clean_data['type'].isnull())].index
     clean_data.drop(drop_null_types, inplace=True)
 
@@ -53,7 +37,7 @@ def preprocess(dataframe: pd.DataFrame) -> pd.DataFrame:
     clean_data['content_stopword'] = clean_data['content_clean'].swifter.apply(pm.remove_stopwords)
 
     # stemming
-    dataframe['content_stem'] = clean_data['content_stopword'].swifter.apply(pm.remove_word_variations)
+    clean_data['content_stem'] = clean_data['content_stopword'].swifter.apply(pm.remove_word_variations)
 
     # interaction
     print("process_d is done.")
