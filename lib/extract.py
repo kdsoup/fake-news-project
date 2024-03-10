@@ -11,4 +11,4 @@ def extract_sample(filename: str, dst: str, start_row: int, end_row: int) -> Non
 input = input("Enter '[filename] [distination] [start_row] [end_row]': ")
 inp_lst = list(input.split(" "))
 
-extract_sample(inp_lst[0], int(inp_lst[1]), int(inp_lst[2]))
+extract_sample(inp_lst[0], inp_lst[1], int(inp_lst[2]), int(inp_lst[3]))

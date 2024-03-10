@@ -4,6 +4,7 @@ from cleantext import clean
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
+from tqdm import tqdm
 
 nltk.download('punkt')
 nltk.download("stopwords")
@@ -76,7 +77,7 @@ def vocabulary_size(df: pd.DataFrame, src_col: str, dst_col: str) -> None:
     """
     Compute vocabulary size text and store result in a new column in the dataframe
     """
-    for i in range(len(df.index)):
+    for i in tqdm(range(len(df.index))):
         size = len(set(nltk.word_tokenize(df.loc[i, src_col])))
         df.at[i, (dst_col)] = size
     
@@ -87,7 +88,7 @@ def reduction_rate(df: pd.DataFrame, src_col_a: str, src_col_b: str, dst_col: st
     """
     Compute reduction rate and store result in new column in dataframe
     """
-    for i in range(len(df.index)):
+    for i in tqdm(range(len(df.index))):
         col_a = int(df.loc[i, src_col_a])
         col_b = int(df.loc[i, src_col_b])
         reduction = ((col_a - col_b)/col_a) * 100
