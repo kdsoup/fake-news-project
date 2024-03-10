@@ -95,16 +95,3 @@ def reduction_rate(df: pd.DataFrame, src_col_a: str, src_col_b: str, dst_col: st
         df.at[i, dst_col] = round(reduction, 3)
 
     return None
-
-def word_freq(df: pd.DataFrame, src_col: str, dst_col: str) -> pd.DataFrame:
-    """
-    Compute count of unique words in text and store result in a new column in the dataframe
-    """
-
-    df_out = pd.DataFrame()
-
-    for i in tqdm(range(len(df.index))):
-        size = len(set(nltk.word_tokenize(df.loc[i, src_col])))
-        df_out.at[i, (dst_col)] = size
-    
-    return df_out
