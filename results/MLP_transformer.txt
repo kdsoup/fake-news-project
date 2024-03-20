@@ -1,0 +1,9 @@
+MLP CLASSIFIER w/ TRANSFORMER
+              precision    recall  f1-score   support
+
+       False       0.90      0.87      0.89     21571
+        True       0.88      0.90      0.89     22002
+
+    accuracy                           0.89     43573
+   macro avg       0.89      0.89      0.89     43573
+weighted avg       0.89      0.89      0.89     43573
