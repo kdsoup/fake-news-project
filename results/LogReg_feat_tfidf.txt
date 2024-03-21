@@ -1,0 +1,9 @@
+LOGISTIC REGRESSION w/ FEATURES + TF-IDF
+              precision    recall  f1-score   support
+
+       False       0.82      0.78      0.80     21571
+        True       0.80      0.83      0.81     22002
+
+    accuracy                           0.81     43573
+   macro avg       0.81      0.81      0.81     43573
+weighted avg       0.81      0.81      0.81     43573

@@ -1,0 +1,9 @@
+NAIVE BAYES w/ FEATURES + TF-IDF
+              precision    recall  f1-score   support
+
+       False       0.61      0.70      0.65     21571
+        True       0.66      0.56      0.61     22002
+
+    accuracy                           0.63     43573
+   macro avg       0.64      0.63      0.63     43573
+weighted avg       0.64      0.63      0.63     43573

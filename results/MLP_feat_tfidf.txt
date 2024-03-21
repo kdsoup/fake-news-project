@@ -1,0 +1,9 @@
+MLP CLASSIFIER w/ FEATURES + TF-IDF
+              precision    recall  f1-score   support
+
+       False       0.92      0.93      0.92     21571
+        True       0.93      0.92      0.92     22002
+
+    accuracy                           0.92     43573
+   macro avg       0.92      0.92      0.92     43573
+weighted avg       0.92      0.92      0.92     43573
