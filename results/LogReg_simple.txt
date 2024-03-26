@@ -1,9 +1,0 @@
-LOGISTIC REGRESSION (SIMPLE)
-              precision    recall  f1-score   support
-
-       False       0.76      0.69      0.72     21571
-        True       0.72      0.78      0.75     22002
-
-    accuracy                           0.74     43573
-   macro avg       0.74      0.74      0.74     43573
-weighted avg       0.74      0.74      0.74     43573
