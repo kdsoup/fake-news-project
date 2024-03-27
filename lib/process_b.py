@@ -4,6 +4,10 @@ import swifter
 
 def preprocess(dataframe: pd.DataFrame) -> pd.DataFrame:
 
+    """
+    Preprocessing pipeline for cleaning the '995,000_rows.csv' dataset
+    """
+
     # deep copy
     clean_data = dataframe.copy(deep=True)
 
@@ -38,9 +42,5 @@ def preprocess(dataframe: pd.DataFrame) -> pd.DataFrame:
 
     # stemming
     clean_data['content_stem'] = clean_data['content_stopword'].swifter.apply(pm.remove_word_variations)
-
-    # interaction
-    print("process_d is done.")
-
 
     return clean_data
