@@ -16,10 +16,10 @@ def clean_text(text: str) -> str:
     """
 
     # Replace dates with <DATE> (assuming date format MM DD,YYYY (fx Jan. 8, 2017 or april 4, 1999))
-    text = re.sub('(?:[a-zA-Z]+)\.?\s+[0-9]{1,2},\s+[0-9]{4}', '_DATE_', text)
+    text = re.sub(r'(?:[a-zA-Z]+)\.?\s+[0-9]{1,2},\s+[0-9]{4}', '_DATE_', text)
 
     # Remove multiple white spaces, tabs, new lines
-    text = re.sub(' +|\n+|\t+',' ', text)
+    text = re.sub(r' +|\n+|\t+',' ', text)
     
     text = clean(text,
         lower=True,                    # lowercase text
@@ -73,31 +73,24 @@ def remove_word_variations(text: str) -> str:
     return stemmed_text
 
 
-def vocabulary_size(df: pd.DataFrame, src_col: str, dst_col: str) -> None:
+def get_word_freq(text: str) -> int:
     """
-    Compute vocabulary size text and store result in a new column in the dataframe
+    Count unique words in text (word frequency of content_clean)
     """
-    for i in tqdm(range(len(df.index))):
-        size = len(set(nltk.word_tokenize(df.loc[i, src_col])))
-        df.at[i, (dst_col)] = size
-    
-    return None
+    tokens = nltk.word_tokenize(text)
+    return len(set(tokens))
 
 
-def reduction_rate(df: pd.DataFrame, src_col_a: str, src_col_b: str, dst_col: str) -> None:
+def reduction_rate(df: pd.DataFrame, src_col_a: str, src_col_b: str):
     """
     Compute reduction rate and store result in new column in dataframe
     """
-    for i in tqdm(range(len(df.index))):
-        col_a = int(df.loc[i, src_col_a])
-        col_b = int(df.loc[i, src_col_b])
-        reduction = ((col_a - col_b)/col_a) * 100
-        df.at[i, dst_col] = round(reduction, 3)
-
-    return None
+    col_a = df[src_col_a]
+    col_b = df[src_col_b]
+    return round(((col_a - col_b)/col_a) * 100, 3)
 
 
-def train_val_test(df: pd.DataFrame) -> None:
+def train_valid_test(df: pd.DataFrame) -> None:
     """
     Splitting a pandas dataframe into 80/10/10 split: 80% traning data, 10% validation data, and 10% test data.
     The splitting is done by uniformly selecting random rows. Each split is saved as new csv files in 'data' subfolder.
@@ -127,3 +120,28 @@ def train_val_test(df: pd.DataFrame) -> None:
     test_data.to_csv('data/test_data.csv')
     
     return None
+
+
+def group_data(df: pd.DataFrame, omitted_types: set, fake_types: set) -> pd.DataFrame:
+    """
+    Removed omitted types from dataset and group fake_types as 'fake'
+    """
+
+    # make copy
+    df_out = df.copy(deep=True)
+
+    # drop omitted types
+    drop_indexes = df_out[ (df_out['type'].isin(omitted_types))].index
+    df_out.drop(drop_indexes, inplace=True)
+
+    # group fake types
+    def change_to_fake(type: str) -> str:
+        if type in fake_types:
+            return 'fake'
+        else:
+            return type
+
+    df_out['type'] = df_out['type'].apply(change_to_fake)
+
+    # return dataframe
+    return df_out
