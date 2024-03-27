@@ -120,3 +120,28 @@ def train_valid_test(df: pd.DataFrame) -> None:
     test_data.to_csv('data/test_data.csv')
     
     return None
+
+
+def group_data(df: pd.DataFrame, omitted_types: set, fake_types: set) -> pd.DataFrame:
+    """
+    Removed omitted types from dataset and group fake_types as 'fake'
+    """
+
+    # make copy
+    df_out = df.copy(deep=True)
+
+    # drop omitted types
+    drop_indexes = df_out[ (df_out['type'].isin(omitted_types))].index
+    df_out.drop(drop_indexes, inplace=True)
+
+    # group fake types
+    def change_to_fake(type: str) -> str:
+        if type in fake_types:
+            return 'fake'
+        else:
+            return type
+
+    df_out['type'] = df_out['type'].apply(change_to_fake)
+
+    # return dataframe
+    return df_out
